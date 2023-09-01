@@ -1,0 +1,27 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="django_project.blog.models.Question.objects" />
+          <option value="django_project.blog.models.Answer.objects" />
+          <option value="python_2.blog.models.Question.objects" />
+          <option value="app.blog.models.Question.objects" />
+          <option value="app.blog.models.Answer.objects" />
+          <option value="python_2.blog.models.Category.objects" />
+          <option value="app.blog.models.Category.objects" />
+          <option value="django_project.blog.models.Category.objects" />
+          <option value="python_2.blog.models.Answer.objects" />
+          <option value="django.contrib.postgres.fields.array.ArrayField.remove" />
+          <option value="django.contrib.postgres.fields.array.ArrayField.append" />
+          <option value="forum_main.models.Post.objects" />
+          <option value="forum_main.models.Question.objects" />
+          <option value="app.blog.models.Notification.objects" />
+          <option value="forum_main.models.Answer.objects" />
+          <option value="forum_main.models.Category.objects" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
