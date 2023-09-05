@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('create_printer/', views.create_printer, name='create_printer'),
-    # path('generate_check/<int:order_id>/', views.generate_check, name='generate_check'),
+    path('create_check/', views.create_checks, name='create_check'),
 ]

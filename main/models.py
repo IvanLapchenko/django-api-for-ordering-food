@@ -25,8 +25,15 @@ class Check(models.Model):
         (PRINTED, 'printed')
     ]
 
+    CLIENT = 'client'
+    KITCHEN = 'kitchen'
+    TYPE_CHOICES = [
+        (CLIENT, 'client'),
+        (KITCHEN, 'kitchen'),
+    ]
+
     printer_id = models.ForeignKey(Printer, on_delete=models.PROTECT)
-    type = models.CharField()
+    type = models.CharField(choices=TYPE_CHOICES)
     order = models.JSONField()
     status = models.CharField(choices=STATUS_CHOICES)
     pdf_file = models.FileField(upload_to='')

@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Order PDF</title>
+    <meta charset="UTF-8">
+    <title>Check</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-    <h1>Order Number: {{ order.order_number }}</h1>
-    <p>Order Type: {{ order.order_type }}</p>
-    <p>Created At: {{ order.created_at }}</p>
+    <div class="header">
+        <h1>Check</h1>
+    </div>
+    <div class="content">
+        <div class="order-details">
+            <h2>Order Details</h2>
+            <p><strong>Order Type:</strong> {{ check.type }}</p>
+            <p><strong>Order Items:</strong></p>
+            <ul>
+                {% for item in check.order %}
+                    <li class="order-item">{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
