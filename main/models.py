@@ -1,16 +1,7 @@
 from django.db import models
 
 
-class Order(models.Model):
-    order_number = models.CharField(max_length=100)
-    order_type = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.order_number
-
-
-class Check(models.Model):
+class Printer(models.Model):
     CLIENT = 'client'
     KITCHEN = 'kitchen'
     TYPE_CHOICES = [
@@ -18,7 +9,24 @@ class Check(models.Model):
         (KITCHEN, 'kitchen'),
     ]
 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    pdf_link = models.FileField(upload_to='media/pdf')
-    status = models.CharField(max_length=50)
-    type = models.CharField(max_length=8, choices=TYPE_CHOICES)
+    name = models.CharField()
+    api_key = models.CharField()
+    check_type = models.CharField(choices=TYPE_CHOICES)
+    point_id = models.IntegerField()
+
+
+class Check(models.Model):
+    NEW = 'new'
+    RENDERED = 'rendered'
+    PRINTED = 'printed'
+    STATUS_CHOICES = [
+        (NEW, 'new'),
+        (RENDERED, 'rendered'),
+        (PRINTED, 'printed')
+    ]
+
+    printer_id = models.ForeignKey(Printer, on_delete=models.PROTECT)
+    type = models.CharField()
+    order = models.JSONField()
+    status = models.CharField(choices=STATUS_CHOICES)
+    pdf_file = models.FileField(upload_to='')
