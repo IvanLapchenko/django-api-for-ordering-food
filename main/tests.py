@@ -15,10 +15,3 @@ if response.status_code == 200:
     print('Success:', response.json())
 else:
     print('Error:', response.json())
-
-# headers = {
-#     'Content-Type': 'application/json',
-# }
-# url = 'http://localhost:5001/'
-# response = requests.post(url, data=json.dumps({'contents': 'some'}), headers=headers)
-# print(response.content)

@@ -1,12 +1,14 @@
 import json
 import requests
-from celery import shared_task
 from django.template.loader import get_template
+import os
 
+os.path.join('C:/Users/lapch/PycharmProjects/SheepFish')
+from SheepFish.celery import app
 from .models import Check
 
 
-@shared_task
+@app.task(track_started=True)
 def generate_pdf(check_id):
     check = Check.objects.get(pk=check_id)
     template = get_template('check.html')

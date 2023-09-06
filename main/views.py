@@ -1,10 +1,13 @@
 import json
+import os
 import random
 import string
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+os.path.join('C:/Users/lapch/PycharmProjects/SheepFish')
+from SheepFish.celery import app
 from .models import Check, Printer
 from .tasks import generate_pdf
 
@@ -51,7 +54,10 @@ def create_checks(request):
                 order=order_data,
                 status=Check.NEW
             )
-            generate_pdf.apply_async(args=(check.id,))
+            result = generate_pdf.delay(check.id)
+            print(result.state)
+            # res = app.AsyncResult(result)
+            # print(res.state)
 
         return JsonResponse({'message': 'Checks created;PDF generation started'})
 
