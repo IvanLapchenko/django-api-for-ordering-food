@@ -1,14 +1,12 @@
 import json
 import random
-import requests
 import string
 
-from celery import shared_task
 from django.http import JsonResponse
-from django.template.loader import get_template
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Check, Printer
+from .tasks import generate_pdf
 
 
 @csrf_exempt
@@ -60,24 +58,4 @@ def create_checks(request):
     return JsonResponse({'message': 'Invalid request method'}, status=405)
 
 
-@shared_task
-def generate_pdf(check_id):
-    print('penis')
-    # check = Check.objects.get(pk=check_id)
-    # template = get_template('check.html')
-    # html_content = template.render({'check': check})
-    #
-    # url = 'http://localhost:5001/'
-    # data = {
-    #     'contents': html_content
-    # }
-    # headers = {
-    #     'Content-Type': 'application/json',
-    # }
-    # response = requests.post(url, data=json.dumps(data), headers=headers)
-    #
-    # with open('/file.pdf', 'wb') as f:
-    #     f.write(response.content)
-    #
-    # check.status = Check.RENDERED
-    # check.save()
+
