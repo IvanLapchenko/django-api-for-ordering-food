@@ -3,13 +3,12 @@ import requests
 from django.template.loader import get_template
 import os
 
-os.path.join('C:/Users/lapch/PycharmProjects/SheepFish')
-from SheepFish.celery import app
+from celery import shared_task
 from .models import Check
 
 
-@app.task(track_started=True)
-def generate_pdf(check_id):
+@shared_task()
+def generate_pdf(check_id: int):
     check = Check.objects.get(pk=check_id)
     template = get_template('check.html')
     html_content = template.render({'check': check})
@@ -22,9 +21,10 @@ def generate_pdf(check_id):
         'Content-Type': 'application/json',
     }
     response = requests.post(url, data=json.dumps(data), headers=headers)
-
-    with open('/file.pdf', 'wb') as f:
+    with open("../media/pdf/pdfile.pdf", "w") as f:
+        print('some')
         f.write(response.content)
+        print(f)
 
     check.status = Check.RENDERED
     check.save()
