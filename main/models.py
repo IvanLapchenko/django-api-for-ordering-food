@@ -35,5 +35,5 @@ class Check(models.Model):
     printer_id = models.ForeignKey(Printer, on_delete=models.PROTECT)
     type = models.CharField(choices=TYPE_CHOICES)
     order = models.JSONField()
-    status = models.CharField(choices=STATUS_CHOICES)
+    status = models.CharField(choices=STATUS_CHOICES, default=NEW)
     pdf_file = models.FileField(upload_to='')

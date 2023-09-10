@@ -38,30 +38,33 @@ def create_printer(request):
 
 @csrf_exempt
 def create_checks(request):
-    if request.method == 'POST':
-        try:
-            point_id = int(request.POST.get('point_id'))
-            order_data = json.loads(request.POST.get('order'))
-        except (ValueError, TypeError, json.JSONDecodeError):
-            return JsonResponse({'message': 'Invalid input data'}, status=400)
+    if request.method != 'POST':
+        return JsonResponse({'message': 'Invalid request method'}, status=405)
 
-        printers = Printer.objects.filter(point_id=point_id)
+    try:
+        point_id = int(request.POST.get('point_id'))
+        order_data = json.loads(request.POST.get('order'))
+        order_id = order_data.get('order_id')
+    except (ValueError, TypeError, json.JSONDecodeError):
+        return JsonResponse({'message': 'Invalid input data'}, status=400)
 
-        for printer in printers:
-            check = Check.objects.create(
-                printer_id=printer,
-                type=printer.check_type,
-                order=order_data,
-                status=Check.NEW
-            )
-            result = generate_pdf.delay(check.id)
-            print(result.state)
-            # res = app.AsyncResult(result)
-            # print(res.state)
+    existing_checks = Check.objects.filter(order__contains={'order_id': order_id})
 
-        return JsonResponse({'message': 'Checks created;PDF generation started'})
+    if existing_checks.exists():
+        return JsonResponse({'message': f'Checks for order_id {order_id} already exist'}, status=409)
 
-    return JsonResponse({'message': 'Invalid request method'}, status=405)
+    printers = Printer.objects.filter(point_id=point_id)
 
+    if not printers:
+        return JsonResponse({'message': f'No printers at point {point_id}'}, status=404)
 
+    for printer in printers:
+        check = Check.objects.create(
+            printer_id=printer,
+            type=printer.check_type,
+            order=order_data,
+        )
 
+        generate_pdf.delay(check_id=check.id, order_id=order_id)
+
+    return JsonResponse({'message': 'Checks created;PDF generation started'})

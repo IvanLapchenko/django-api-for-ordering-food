@@ -1,13 +1,14 @@
 import requests
 import json
 
-url = 'http://localhost:8000/api/create_check/'  # Replace with your actual URL
+url = 'http://localhost:8000/api/create_check/'
 
-# Sample data for the POST request
+
 data = {
-    'point_id': 1,  # Replace with the desired point_id
-    'order': json.dumps(['item1', 'item2', 'item3'])  # Replace with your order data
+    'point_id': 4,
+    'order': json.dumps({'order_id': 123, 'order_items': ['item1', 'item2', 'item3']})
 }
+
 
 response = requests.post(url, data=data)
 
