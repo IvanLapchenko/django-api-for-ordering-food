@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Jrachka top
+  description: API for jrachka top service
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/
+paths:
+  /api/create_printer/:
+    post:
+      summary: Create a new printer
+      description: Create a new printer with a random API key.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the printer.
+                check_type:
+                  type: string
+                  description: The type of checks this printer can handle (client or kitchen).
+                point_id:
+                  type: integer
+                  description: The point ID associated with the printer.
+      responses:
+        '200':
+          description: Printer created successfully
+          content:
+            application/json:
+              example:
+                message: Printer created successfully
+  /api/create_check/:
+    post:
+      summary: Create new checks
+      description: Create new checks for a given order and check if checks with the same order_id already exist.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                point_id:
+                  type: integer
+                  description: The point ID for which the checks will be created.
+                order_id:
+                  type: integer
+                  description: The unique order ID.
+                order_items:
+                  type: array
+                  description: The list of order items.
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Async task is started, so check will be created
+          content:
+            application/json:
+              example:
+                message: Checks created; PDF generation started
+        '400':
+          description: Missing some data/Invalid format
+          content:
+            application/json:
+              example:
+                message: Invalid input data
+        '405':
+          description: This endpoint accepts only post
+          content:
+            application/json:
+              example:
+                message: Invalid request method
+        '409':
+          description: This order_id is already present in the database
+          content:
+            application/json:
+              example:
+                message: Checks for order_id already exist
+  /api/print_rendered_checks/:
+    post:
+      summary: Print rendered checks
+      description: Print checks with the 'rendered' status for a specific printer. Now it just gets all checks, because i don't have any printer
+      parameters:
+        - name: printer_id
+          in: query
+          required: true
+          description: The ID of the printer for which checks will be printed.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Request to the printers had been sent
+          content:
+            application/json:
+              example:
+                message: All checks are printing
+        '405':
+          description: This endpoint accepts only post
+          content:
+            application/json:
+              example:
+                message: Invalid request method
