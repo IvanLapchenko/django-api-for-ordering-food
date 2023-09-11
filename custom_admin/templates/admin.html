@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href=" {% static '/admin.css' %} ">
+</head>
+<body>
+    <h1>Printers</h1>
+    <ul>
+        {% for printer in printers %}
+            <li>{{ printer.name }} - {{ printer.check_type }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Checks</h2>
+    <p>Sort by:
+        <a href="?sort_by=printer">Printer</a> |
+        <a href="?sort_by=type">Type</a> |
+        <a href="?sort_by=status">Status</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Printer</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for check in checks %}
+                <tr>
+                    <td>{{ check.printer_id.name }}</td>
+                    <td>{{ check.type }}</td>
+                    <td>{{ check.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

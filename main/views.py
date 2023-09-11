@@ -1,13 +1,10 @@
 import json
-import os
 import random
 import string
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-os.path.join('C:/Users/lapch/PycharmProjects/SheepFish')
-from SheepFish.celery import app
 from .models import Check, Printer
 from .tasks import generate_pdf
 
