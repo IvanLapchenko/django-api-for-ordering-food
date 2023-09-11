@@ -4,3 +4,4 @@ python-dotenv==1.0.0
 requests==2.28.2
 celery~=5.3.4
 redis==5.0.0
+django-cors-headers==4.2.0

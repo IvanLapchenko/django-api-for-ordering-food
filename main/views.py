@@ -42,9 +42,10 @@ def create_checks(request):
         return JsonResponse({'message': 'Invalid request method'}, status=405)
 
     try:
-        point_id = int(request.POST.get('point_id'))
-        order_data = json.loads(request.POST.get('order'))
-        order_id = order_data.get('order_id')
+        data_from_client = json.loads(request.body)
+        point_id = int(data_from_client.get('point_id'))
+        order_data = data_from_client.get('order_items')
+        order_id = data_from_client.get('order_id')
     except (ValueError, TypeError, json.JSONDecodeError):
         return JsonResponse({'message': 'Invalid input data'}, status=400)
 
