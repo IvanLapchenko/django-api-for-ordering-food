@@ -66,3 +66,18 @@ def create_checks(request):
         generate_pdf.delay(check_id=check.id, order_id=order_id)
 
     return JsonResponse({'message': 'Checks created;PDF generation started'})
+
+
+@csrf_exempt
+def print_rendered_checks(request):
+    if request.method != 'POST':
+        return JsonResponse({'message': 'Invalid request method'}, status=405)
+
+    printer_id = request.GET.get('printer_id')
+
+    rendered_checks = Check.objects.filter(printer_id=printer_id, status='rendered')
+
+    # imitate physical printing wrapped up with try/except
+
+    # if all is ok
+    return JsonResponse({'message': 'All checks are printing'})
