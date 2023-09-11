@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>J'rachka Top</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <h1>Add Order</h1>
+        <a href="printer_management.html">Printer Management</a>
+    </header>
+    <main>
+        <form id="orderForm" action="http://localhost:8000/create_checks/" method="POST">
+            <label for="point_id">Point ID:</label>
+            <input type="number" id="point_id" name="point_id" required>
+
+            <label for="order_id">Order ID:</label>
+            <input type="number" id="order_id" name="order_id" required>
+
+            <div id="orderDataContainer">
+                <label>Orders:</label>
+                <input type="text" class="order" name="order" required>
+            </div>
+            <div id="buttons">
+                <button type="button" id="addOrderField">Add one more</button>
+                <button type="submit">Create order</button>
+            </div>
+        </form>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
