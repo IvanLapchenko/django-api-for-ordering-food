@@ -1,6 +1,6 @@
 @echo off
 
-start docker-compose up
+start docker compose up
 
 timeout /t 10 /nobreak
 
